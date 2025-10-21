@@ -57,8 +57,13 @@ def featurize(train_df, test_df, pipeline_save_path):
     y_train = train_df["Survived"].astype(int)
     X_train = train_df.drop(columns=["Survived"])
     X_test = test_df.copy()
-    if "Survived" in X_test.columns:
+
+    if "Survived" in test_df.columns:
+        y_test = X_test["Survived"].astype(int)
         X_test = X_test.drop(columns=["Survived"])
+    else:
+        y_test = None
+        X_test = test_df.copy()
 
     # Build pipeline
     pipeline = build_feature_pipeline()
@@ -71,7 +76,7 @@ def featurize(train_df, test_df, pipeline_save_path):
     joblib.dump(pipeline, pipeline_save_path)
     print(f"Saved feature pipeline to: {pipeline_save_path}")
 
-    return X_train_transformed, y_train, X_test_transformed
+    return X_train_transformed, y_train, X_test_transformed,y_test
 
 
 def main():
@@ -89,7 +94,9 @@ def main():
     test_df = pd.read_csv(args.test_path)
 
     # Featurize
-    X_train_transformed, y_train, X_test_transformed = featurize(train_df, test_df, args.output_transformer)
+    X_train_transformed, y_train, X_test_transformed, y_test = featurize(
+    train_df, test_df, args.output_transformer
+)
 
     # Save transformed train (with target)
     train_out = pd.DataFrame(X_train_transformed)
