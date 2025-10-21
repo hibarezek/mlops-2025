@@ -95,8 +95,8 @@ def main():
 
     # Featurize
     X_train_transformed, y_train, X_test_transformed, y_test = featurize(
-    train_df, test_df, args.output_transformer
-)
+        train_df, test_df, args.output_transformer
+    )
 
     # Save transformed train (with target)
     train_out = pd.DataFrame(X_train_transformed)
@@ -107,6 +107,9 @@ def main():
 
     # Save transformed test
     test_out = pd.DataFrame(X_test_transformed)
+    if y_test is not None:
+        test_out["Survived"] = y_test.values  # Only add Survived if it exists
+
     Path(args.output_test).parent.mkdir(parents=True, exist_ok=True)
     test_out.to_csv(args.output_test, index=False)
     print(f"Saved featurized test to: {args.output_test}")
