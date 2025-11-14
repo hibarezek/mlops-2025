@@ -3,10 +3,10 @@ Data preprocessing script for Titanic survival prediction.
 Handles data loading, cleaning, and basic preprocessing steps.
 """
 import pandas as pd
-from mlops_2025.preprocessing import Base_Preprocessor
+from .Base_Preprocessor import BasePreprocessor
 
-class Preprocessor(Base_Preprocessor):
-    def clean_data(train, test):
+class Preprocessor(BasePreprocessor):
+    def process(self, train, test):
         """Clean the data by handling missing values and dropping unnecessary columns."""
         # Drop Cabin column due to numerous null values
         train.drop(columns=["Cabin"], inplace=True)
