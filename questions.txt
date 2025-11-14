@@ -1,0 +1,8 @@
+XGBoost performs slightly worse than Logistic Regression on your current pipeline,
+which can happen and isn’t inherently weird.it’s an indicator that the overall pipeline (preprocessing, feature engineering, hyperparameters, or even data splits) isn’t yet optimized for more complex models.
+We can improve cleaning and standardizing the preprocessing logic, adding richer and more consistent feature engineering, 
+performing proper hyperparameter tuning (especially for XGBoost because it is very sensitive to parameter choices), 
+adding cross-validation instead of a single split, improving the train/validation split strategy, 
+enforcing reproducibility with fixed random seeds, and strengthening your pipeline structure (clear interfaces, dependency management, logging, and configuration files). 
+
+These enhancements help ensure that model comparisons are fair, performance is reliable, and the overall codebase reflects production-grade MLOps practices.
